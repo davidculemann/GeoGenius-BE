@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>API</title>
+    </head>
+    <body>
+        <h1>API Documentation</h1>
+
+        <h2>Endpoint 1</h2>
+        <p>Returns "Hello World!"</p>
+        <p>HTTP method: GET</p>
+        <p>Endpoint: /example</p>
+        <p>Example:</p>
+        <pre>GET /example HTTP/1.1</pre>
+
+        <h2>Endpoint 2</h2>
+        <p>Returns "found" if id is "1", "not found" otherwise</p>
+        <p>HTTP method: GET</p>
+        <p>Endpoint: /example/:id</p>
+        <p>Parameters:</p>
+        <ul>
+            <li>id: The ID to check. Required.</li>
+        </ul>
+        <p>Example:</p>
+        <pre>GET /example/1 HTTP/1.1</pre>
+
+        <h2>Endpoint 3</h2>
+        <p>Completes a prompt using the OpenAI API</p>
+        <p>HTTP method: POST</p>
+        <p>Endpoint: /completion</p>
+        <p>Body parameters:</p>
+        <ul>
+            <li>prompt: The prompt to complete. Required.</li>
+        </ul>
+        <p>Example:</p>
+        <pre>
+POST /completion HTTP/1.1
+Content-Type: application/json
+
+{
+  "prompt": "Some prompt text."
+}</pre
+        >
+
+        <h2>Endpoint 4</h2>
+        <p>Returns a list of available OpenAI models</p>
+        <p>HTTP method: GET</p>
+        <p>Endpoint: /models</p>
+        <p>Example:</p>
+        <pre>GET /models HTTP/1.1</pre>
+    </body>
+</html>
