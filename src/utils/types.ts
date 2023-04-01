@@ -8,8 +8,7 @@ export interface DefaultCompletionRequestObject {
     //stop: string | Array<string>;
 }
 
-export interface CompletionRequestObject
-    extends DefaultCompletionRequestObject {
+export interface CompletionRequestObject extends DefaultCompletionRequestObject {
     prompt: string;
     model: string;
 }

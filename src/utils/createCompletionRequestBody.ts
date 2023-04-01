@@ -1,8 +1,4 @@
-import {
-    DefaultCompletionRequestObject,
-    CompletionRequestObject,
-    CompletionEditRequestBody
-} from './types';
+import { DefaultCompletionRequestObject, CompletionRequestObject, CompletionEditRequestBody } from './types';
 
 /**
  * An object containing default values for properties of a CompletionRequestObject.
@@ -32,10 +28,7 @@ const completionsConfigObject: DefaultCompletionRequestObject = {
  * @param {string} model - The model to use. e.g davinci, curie
  * @returns {CompletionRequestObject} - An object that contains the properties prompt, model, max_tokens, temperature, top_p, n, stream, logprobs and stop
  */
-export const createCompletionRequestBody = (
-    prompt: string,
-    model: string
-): CompletionRequestObject => {
+export const createCompletionRequestBody = (prompt: string, model: string): CompletionRequestObject => {
     return { prompt: prompt, model: model, ...completionsConfigObject };
 };
 
@@ -46,11 +39,7 @@ export const createCompletionRequestBody = (
  * @param {string} model - The model you want to use for the completion
  * @returns {Object} requestBody - An object containing the promptId, newPrompt, and model
  */
-export const createCompletionEditRequestBody = (
-    promptId: string,
-    newPrompt: string,
-    model: string
-): CompletionEditRequestBody => {
+export const createCompletionEditRequestBody = (promptId: string, newPrompt: string, model: string): CompletionEditRequestBody => {
     const requestBody = {
         promptId: promptId,
         prompt: newPrompt,
