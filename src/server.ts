@@ -5,7 +5,8 @@ import filePath from './utils/filePath';
 import morgan from 'morgan';
 import exampleRouter from './routes/exampleRoutes';
 import completionRouter from './routes/completionRoutes';
-import functions from 'firebase-functions';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const functions = require('firebase-functions');
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(morgan('combined'));
 app.use(cors());
 dotenv.config();
 
-const PORT_NUMBER = process.env.PORT ?? 4000;
+const PORT_NUMBER = 4000; //process.env.PORT ?? 4000;
 
 // API info page
 app.get('/', (req, res) => {
