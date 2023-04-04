@@ -21,3 +21,9 @@ export interface CompletionEditRequestBody {
     prompt: string;
     model: string;
 }
+
+export interface RequestWithToken extends Request {
+    token: {
+        uid: string;
+    };
+}
