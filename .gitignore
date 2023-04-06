@@ -2,5 +2,5 @@
 dist
 node_modules
 firebaseConfig.json
-serviceAccount.json
+serviceAccountKey.json
 firebaseServer.ts

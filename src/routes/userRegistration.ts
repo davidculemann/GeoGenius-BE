@@ -1,28 +1,30 @@
 import { Request, Response } from 'express';
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-
+import firebaseAdmin from '../firebaseAdmin';
 import { FirebaseError } from 'firebase-admin';
-import { getAuth as getAdminAuth } from 'firebase-admin/auth';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const firestore = require('firebase-admin').firestore();
+const firestore = firebaseAdmin.firestore();
 
 export default async function register(req: Request, res: Response) {
     const { email, password, username } = req.body;
+    console.log('body in register', req.body);
+
     if (!username) {
-        //handle errors here
         res.status(400).json({ error: { code: 'no-username' } });
         return;
     }
 
     try {
-        const auth = getAuth();
-        const credential = await createUserWithEmailAndPassword(auth, email, password);
-        const adminAuth = getAdminAuth();
-        const token = await adminAuth.createCustomToken(credential.user.uid);
-        await firestore.doc(`users/${credential.user.uid}`).set({ username });
+        const existingUser = await firestore.collection('users').where('username', '==', username).limit(1).get();
+        if (!existingUser.empty) {
+            res.status(400).json({ error: { code: 'username-already-in-use' } });
+            return;
+        }
+        const credential: firebaseAdmin.auth.UserRecord = await firebaseAdmin.auth().createUser({ email, password });
+        const token = await firebaseAdmin.auth().createCustomToken(credential.uid);
+        await firestore.doc(`users/${credential.uid}`).set({ username });
         res.status(201).json({ token });
     } catch (err: unknown) {
+        console.error('Error creating user:', err);
         const { code } = err as FirebaseError;
         if (code === 'auth/email-already-in-use') {
             res.status(400);
