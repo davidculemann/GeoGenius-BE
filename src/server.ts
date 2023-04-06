@@ -6,7 +6,6 @@ import exampleRouter from './routes/exampleRoutes';
 import filePath from './utils/filePath';
 import morgan from 'morgan';
 import getUser from './routes/getUser';
-import login from './routes/userLogin';
 import register from './routes/userRegistration';
 import firebaseAuth from './middleware/firebaseAuth';
 import validateEmailAndPassword from './middleware/validateEmailAndPassword';
