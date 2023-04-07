@@ -21,6 +21,7 @@ export default async function register(req: Request, res: Response) {
         }
         const credential: firebaseAdmin.auth.UserRecord = await firebaseAdmin.auth().createUser({ email, password });
         const token = await firebaseAdmin.auth().createCustomToken(credential.uid);
+        await firebaseAdmin.auth().updateUser(credential.uid, { displayName: username });
         await firestore.doc(`users/${credential.uid}`).set({ username });
         res.status(201).json({ token });
     } catch (err: unknown) {
