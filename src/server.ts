@@ -9,6 +9,7 @@ import getUser from './routes/getUser';
 import register from './routes/userRegistration';
 import firebaseAuth from './middleware/firebaseAuth';
 import validateEmailAndPassword from './middleware/validateEmailAndPassword';
+import getStatistics from './routes/getStatistics';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const functions = require('firebase-functions');
@@ -30,6 +31,7 @@ app.use('/example', exampleRouter);
 app.use('/completion', completionRouter);
 app.post('/register', validateEmailAndPassword, register);
 app.get('/users/:id', firebaseAuth, getUser);
+app.get('/statistics/:statistic', getStatistics);
 
 app.listen(PORT_NUMBER, () => {
     console.log(`Server is listening on port ${PORT_NUMBER}!`);
