@@ -19,11 +19,21 @@ fs.readdir(folderPath, (err, files) => {
                 results.push(data);
             })
             .on('end', () => {
-                // Upload the data to Firebase as a collection
+                // Replace the data in Firebase as a collection
                 const collectionName = file.replace('.csv', '');
                 const collectionRef = admin.firestore().collection(collectionName);
-                results.forEach((result) => {
-                    collectionRef.add(result);
+                // Delete all documents in the collection
+                collectionRef.get().then((snapshot) => {
+                    const batch = admin.firestore().batch();
+                    snapshot.forEach((doc) => {
+                        batch.delete(doc.ref);
+                    });
+                    batch.commit().then(() => {
+                        // Add the new data to the collection
+                        results.forEach((result) => {
+                            collectionRef.add(result);
+                        });
+                    });
                 });
             });
     });
