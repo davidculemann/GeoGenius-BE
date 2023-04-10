@@ -7,7 +7,7 @@ export default async function getStatistics(req: Request, res: Response) {
         const collectionRef = admin.firestore().collection(statistic);
         const snapshot = await collectionRef.get();
         const data = snapshot.docs.map((doc) => doc.data());
-        res.json(data);
+        res.status(200).send(data);
     } catch (error) {
         console.error('Error retrieving statistics:', error);
         res.status(500).send('Error retrieving statistics.');
