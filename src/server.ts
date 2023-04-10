@@ -5,11 +5,12 @@ import dotenv from 'dotenv';
 import exampleRouter from './routes/exampleRoutes';
 import filePath from './utils/filePath';
 import morgan from 'morgan';
-import getUser from './routes/getUser';
 import register from './routes/userRegistration';
 import firebaseAuth from './middleware/firebaseAuth';
 import validateEmailAndPassword from './middleware/validateEmailAndPassword';
 import getStatistics from './routes/getStatistics';
+import getUserScores from './routes/getUserScores';
+import postHighScore from './routes/postHighScore';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const functions = require('firebase-functions');
@@ -30,7 +31,8 @@ app.get('/', (req, res) => {
 app.use('/example', exampleRouter);
 app.use('/completion', completionRouter);
 app.post('/register', validateEmailAndPassword, register);
-app.get('/users/:id', firebaseAuth, getUser);
+app.post('/score', firebaseAuth, postHighScore);
+app.get('/users/:id', firebaseAuth, getUserScores);
 app.get('/statistics/:statistic', getStatistics);
 
 app.listen(PORT_NUMBER, () => {

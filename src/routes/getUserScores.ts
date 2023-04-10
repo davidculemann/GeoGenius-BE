@@ -1,7 +1,7 @@
 import firebaseAdmin from '../firebaseAdmin';
 import { Request, Response } from 'express';
 
-export default async function getUser(req: Request, res: Response) {
+export default async function getUserScores(req: Request, res: Response) {
     const firestore = firebaseAdmin.firestore();
     const userId = req.params.id;
     if (!userId) {
@@ -18,7 +18,10 @@ export default async function getUser(req: Request, res: Response) {
         res.status(404).json({ error: { code: 'user-not-found' } });
         return;
     }
-    const user = snapshot.data() as { username: string };
-
-    res.status(200).json({ username: user.username });
+    const user = snapshot.data();
+    if (!user) {
+        res.status(500).json({ error: { code: 'internal-server-error' } });
+        return;
+    }
+    res.status(200).json(user.scores);
 }
