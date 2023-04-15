@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import csvParser from 'csv-parser';
-import admin from './firebaseAdmin';
+import admin from '../firebaseAdmin';
 import path from 'path';
 
 // Define the path to the folder containing the CSV files

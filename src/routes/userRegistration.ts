@@ -21,7 +21,8 @@ export default async function register(req: Request, res: Response) {
         }
         const credential: firebaseAdmin.auth.UserRecord = await firebaseAdmin.auth().createUser({ email, password });
         const token = await firebaseAdmin.auth().createCustomToken(credential.uid);
-        await firebaseAdmin.auth().updateUser(credential.uid, { displayName: username });
+        const userAvatar = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${username}`;
+        await firebaseAdmin.auth().updateUser(credential.uid, { displayName: username, photoURL: userAvatar });
         await firestore.doc(`users/${credential.uid}`).set({ username });
         res.status(201).json({ token });
     } catch (err: unknown) {
