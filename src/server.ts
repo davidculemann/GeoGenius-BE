@@ -11,6 +11,7 @@ import validateEmailAndPassword from './middleware/validateEmailAndPassword';
 import getStatistics from './routes/getStatistics';
 import getUserScores from './routes/getUserScores';
 import postHighScore from './routes/postHighScore';
+import getLeaderboard from './routes/getLeaderboard';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const functions = require('firebase-functions');
@@ -34,6 +35,7 @@ app.post('/register', validateEmailAndPassword, register);
 app.post('/score', firebaseAuth, postHighScore);
 app.get('/users/:id', firebaseAuth, getUserScores);
 app.get('/statistics/:statistic', getStatistics);
+app.get('/leaderboard/:mode', getLeaderboard);
 
 app.listen(PORT_NUMBER, () => {
     console.log(`Server is listening on port ${PORT_NUMBER}!`);

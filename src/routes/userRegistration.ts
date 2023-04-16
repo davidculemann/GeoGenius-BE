@@ -6,7 +6,6 @@ const firestore = firebaseAdmin.firestore();
 
 export default async function register(req: Request, res: Response) {
     const { email, password, username } = req.body;
-    console.log('body in register', req.body);
 
     if (!username) {
         res.status(400).json({ error: { code: 'no-username' } });
@@ -21,7 +20,8 @@ export default async function register(req: Request, res: Response) {
         }
         const credential: firebaseAdmin.auth.UserRecord = await firebaseAdmin.auth().createUser({ email, password });
         const token = await firebaseAdmin.auth().createCustomToken(credential.uid);
-        await firebaseAdmin.auth().updateUser(credential.uid, { displayName: username });
+        const userAvatar = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${username}`;
+        await firebaseAdmin.auth().updateUser(credential.uid, { displayName: username, photoURL: userAvatar });
         await firestore.doc(`users/${credential.uid}`).set({ username });
         res.status(201).json({ token });
     } catch (err: unknown) {
