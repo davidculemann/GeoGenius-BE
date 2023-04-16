@@ -11,7 +11,7 @@ import validateEmailAndPassword from './middleware/validateEmailAndPassword';
 import getStatistics from './routes/getStatistics';
 import getUserScores from './routes/getUserScores';
 import postHighScore from './routes/postHighScore';
-import getLeaderboard from './routes/getLeaderBoard';
+import getLeaderboard from './routes/getLeaderboard';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const functions = require('firebase-functions');

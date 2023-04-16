@@ -38,14 +38,16 @@ export default async function getLeaderboard(req: Request, res: Response) {
         if (mode === 'all') {
             return Object.keys(userScores).map((mode) => {
                 return {
-                    userId: userId,
+                    username: userId,
+                    userPhoto: `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${userId}`,
                     score: userScores[mode],
                     mode: mode
                 };
             });
         }
         return {
-            userId: userId,
+            username: userId,
+            userPhoto: `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${userId}`,
             score: modeScore,
             mode: mode
         };
