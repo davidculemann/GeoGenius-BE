@@ -35,11 +35,12 @@ export default async function getLeaderboard(req: Request, res: Response) {
     const leaderboard = Object.keys(scores).map((userId) => {
         const userScores = scores[userId];
         const modeScore = userScores[mode] || 0;
+        const photoURL = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${userId}`;
         if (mode === 'all') {
             return Object.keys(userScores).map((mode) => {
                 return {
                     username: userId,
-                    userPhoto: `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${userId}`,
+                    userPhoto: photoURL,
                     score: userScores[mode],
                     mode: mode
                 };
@@ -47,7 +48,7 @@ export default async function getLeaderboard(req: Request, res: Response) {
         }
         return {
             username: userId,
-            userPhoto: `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${userId}`,
+            userPhoto: photoURL,
             score: modeScore,
             mode: mode
         };

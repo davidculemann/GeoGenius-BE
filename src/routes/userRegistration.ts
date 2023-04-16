@@ -6,7 +6,6 @@ const firestore = firebaseAdmin.firestore();
 
 export default async function register(req: Request, res: Response) {
     const { email, password, username } = req.body;
-    console.log('body in register', req.body);
 
     if (!username) {
         res.status(400).json({ error: { code: 'no-username' } });
