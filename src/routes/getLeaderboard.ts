@@ -4,9 +4,12 @@ import { Request, Response } from 'express';
 export default async function getLeaderboard(req: Request, res: Response) {
     const firestore = admin.firestore();
     const mode = req.params.mode; // Get the mode parameter from the request query, or default to null
+    const scoreType = mode === 'timetrial' ? 'customScores' : 'scores';
     let usersRef = firestore.collection('users') as FirebaseFirestore.Query<FirebaseFirestore.DocumentData>;
 
-    if (mode !== 'all') {
+    if (mode === 'timetrial') {
+        usersRef = usersRef.where(`customScores`, '!=', null); // Filter users by presence of customScores property
+    } else if (mode !== 'all') {
         usersRef = usersRef.where(`scores.${mode}`, '>', 0); // Filter users by mode if a mode parameter is provided
     }
 
@@ -25,10 +28,9 @@ export default async function getLeaderboard(req: Request, res: Response) {
         if (!scores[userId]) {
             scores[userId] = {};
         }
-
-        if (data.scores)
-            Object.keys(data?.scores).forEach((key) => {
-                scores[userId][key] = data.scores[key];
+        if (data[scoreType])
+            Object.keys(data[scoreType]).forEach((key) => {
+                scores[userId][key] = data[scoreType][key];
             });
     });
 
@@ -36,7 +38,7 @@ export default async function getLeaderboard(req: Request, res: Response) {
         const userScores = scores[userId];
         const modeScore = userScores[mode] || 0;
         const photoURL = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${userId}`;
-        if (mode === 'all') {
+        if (mode === 'all' || mode === 'timetrial') {
             return Object.keys(userScores).map((mode) => {
                 return {
                     username: userId,
