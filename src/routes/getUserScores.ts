@@ -23,5 +23,6 @@ export default async function getUserScores(req: Request, res: Response) {
         res.status(500).json({ error: { code: 'internal-server-error' } });
         return;
     }
-    res.status(200).json(user.scores);
+    const scoresObject = { scores: user.scores, customScores: user.customScores };
+    res.status(200).json(scoresObject);
 }
